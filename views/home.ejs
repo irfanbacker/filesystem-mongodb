@@ -1,0 +1,52 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style media="screen">
+    .jumbotron {
+      margin-top: 50px;
+      margin-left: 50px;
+      margin-right: 50px;
+      text-align: center;
+    }
+    .col-centered{
+    margin: 0 auto;
+    float: none;
+    }
+    </style>
+</head>
+<script src="file.js" charset="utf-8"></script>
+<title>File manager</title>
+
+<div class="jumbotron bg-dark text-light">
+
+<h1> File manager </h1>
+
+<h2> Files: </h2>
+<form action="/del" method="post">
+<div id="todotask">
+  <ul id="todo">
+    <% if(files.length != 0){ %>
+        <% for( var i = 0; i < files.length; i++){ %>
+            <li style="list-style: none;"><input class="form-check-input" type="radio" name="check" value="<%= files[i].name %>" /> <%= files[i].name %> </li>
+        <% }; %>
+    <% } else{ %>
+        <p>There are no files!</p>
+    <% } %>
+  </ul>
+<button id="rem" class="btn btn-sm btn-secondary shadow" type="submit"> Delete file </button>
+<button id="edit" class="btn btn-sm btn-secondary shadow" type="submit" formaction="/edit"> Edit file </button>
+</form>
+<form>
+  <br>
+<div class="input-group justify-content-center">
+  <div class="input-group-append">
+    <input type="text" id="name" placeholder="Enter file name" class="form-control-sm" autocomplete="off" required>
+  </div>
+  <div class="input-group-append">
+    <button id="create" class="btn btn-sm btn-secondary shadow" type="button"> Create new file </button>
+  </div>
+</div>
+
+</div>
