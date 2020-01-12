@@ -1,0 +1,80 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="file.js" charset="utf-8"></script>
+  <style media="screen">
+    .jumbotron {
+      margin-top: 50px;
+      margin-left: 50px;
+      margin-right: 50px;
+      min-height: 870px;
+      position:relative;
+    }
+    body {
+    background-color: grey;
+    }
+    #bottom{position:absolute; bottom:10px;}
+    hr{
+     border-color: grey;
+     background-color:  grey;
+     color: grey;
+    }
+    #lineb{
+      position: absolute;
+      border-color: grey;
+      background-color:  grey;
+      color: grey;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+    }
+    </style>
+</head>
+<title>File manager</title>
+
+<div class="jumbotron bg-dark text-light">
+  <div class="container">
+    <h3 align="center"> File manager </h3>
+    <div class="row">
+      <div class="col-2">
+        Current Directory:
+      </div>
+      <div id="dir" class="col-8">
+      </div>
+      <div class="col-0.8">
+        Mode:
+      </div>
+      <div class="col" id="mode">
+        Normal
+      </div>
+      <br>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <a href="#" onclick="newFolder();return false;">Create new Folder</a>
+        <a href="#" onclick="newFile();return false;">Create new File</a>
+      </div>
+      <div class="col-8">
+      </div>
+      <div class="col-2" id="chmode">
+        <a href="#" onclick="chMode();return false;">Change Mode</a>
+        <a href="#" onclick="updatelist();return false;">Refresh Directory</a>
+      </div>
+      <br>
+    </div>
+  </div>
+  <hr>
+  <div class="container">
+    <a id="back" href="#" onclick="backDir();return false;">Go back</a>
+    <br>
+    <br>
+    <div id="files">
+    </div>
+  </div>
+  <div class="container" id="bottom">
+  </div>
+  <hr id="lineb" align="center">
+</div>
