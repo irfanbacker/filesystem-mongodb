@@ -31,6 +31,28 @@
       left: 20px;
       right: 20px;
     }
+    ul.breadcrumb {
+      padding: 10px 16px;
+      list-style: none;
+      color: black;
+      background-color: #eee;
+      padding: 2px 15px !important;
+    }
+    ul.breadcrumb li {
+      display: inline;
+    }
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: "/\00a0";
+    }
+    ul.breadcrumb li a {
+      text-decoration: none;
+    }
+    ul.breadcrumb li a:hover {
+      color: #01447e;
+      text-decoration: underline;
+    }
     </style>
 </head>
 <title>File manager</title>
@@ -39,10 +61,10 @@
   <div class="container">
     <h3 align="center"> File manager </h3>
     <div class="row">
-      <div class="col-2">
-        Current Directory:
-      </div>
-      <div id="dir" class="col-8">
+
+      <div id="dir" class="col-10">
+        <ul id="dirl" class="breadcrumb">
+        </ul>
       </div>
       <div class="col-0.8">
         Mode:
@@ -71,7 +93,7 @@
     <a id="back" href="#" onclick="backDir();return false;">Go back</a>
     <br>
     <br>
-    <div id="files">
+    <div id="files" class="row">
     </div>
   </div>
   <div class="container" id="bottom">

@@ -1,7 +1,6 @@
 var socket = io("http://localhost:3000/");
 let currDir=[];
 let files=[];
-let dir='/';
 let mode='Normal';
 
 //-------------------------------------------------------------------------------------------------------------------------
@@ -27,15 +26,6 @@ function getFile(name){
   return file;
 }
 
-function generateDir(fdir){
-  var cdir='';
-  for(let i=0;i<fdir.length;i++){
-    cdir=cdir+' /'+fdir[i];
-  }
-  cdir=cdir+' /';
-  return cdir;
-}
-
 function clickDir(name){
   file=getFile(name);
   if(mode=='Normal'){
@@ -47,7 +37,6 @@ function clickDir(name){
       fdir.push(file.name);
       //console.log(fdir);
       currDir=fdir;
-      dir=generateDir(currDir);
       socket.emit('changedir', fdir);
     }
   }
@@ -66,14 +55,15 @@ function clickDir(name){
 
 function updatelist() {
   var cdir;
+  var l=files.length;
   $("#files").empty();
   if(files.length!=0){
-    for(let i=0;i<files.length;i++){
+    for(let i=0;i<l;i++){
       if(files[i].type==false){
-        $('#files').append('○ <a href="#" onclick="clickDir(\''+files[i].name+'\');return false;">'+files[i].name+'</a><br>');
+        $('#files').append('<a href="#" onclick="clickDir(\''+files[i].name+'\');return false;"><img border="0" alt="file" src="/images/file.png" width="90" height="90"><div class="text" align="center">'+files[i].name+'</div></a>&emsp;');
       }
       else{
-        $('#files').append('○ <a href="#" onclick="clickDir(\''+files[i].name+'\');return false;">'+files[i].name+' /</a><br>');
+        $('#files').append('<a href="#" onclick="clickDir(\''+files[i].name+'\');return false;"><img border="0" alt="folder" src="/images/folder.png" width="90" height="90"><div class="text" align="center">'+files[i].name+'</div></a>&emsp;');
       }
     }
   }
@@ -120,7 +110,13 @@ function newFile(){
 
 function backDir(){
   currDir.pop();
-  dir=generateDir(currDir);
+  socket.emit('changedir', currDir);
+}
+
+function back(lvl){
+  for(let i=currDir.length-1;i>lvl;i--){
+    currDir.pop();
+  }
   socket.emit('changedir', currDir);
 }
 
@@ -138,8 +134,13 @@ socket.on('connect', () => {
     }
     $('#files').empty();
     updatelist();
-    $("#dir").empty();
-    $('#dir').append(dir);
+    $("#dirl").empty();
+    if(currDir.length==0) $('#dirl').append('<li>/  Root</li>');
+    else $('#dirl').append('<li><a href="#" onclick="back(-1);return false;">/  Root</a></li>');
+    for(let i=0;i<currDir.length-1;i++){
+      $('#dirl').append('<li><a href="#" onclick="back('+i+');return false;">'+currDir[i]+'</a></li>');
+    }
+    if(currDir.length>0) $('#dirl').append('<li>'+currDir[currDir.length-1]+'</li>');
     console.log(files);
     console.log('Directory refreshed/Changed');
   })
